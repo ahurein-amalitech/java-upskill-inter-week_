@@ -1,3 +1,5 @@
 .idea
 **/application.properties
 **/application.yml
+**mv.db
+data
