@@ -5,11 +5,8 @@ pipeline {
     }
 
     environment {
-        GIT_REPO_URL = 'https://github.com/ahurein-amalitech/jenkins-rest-example'
+        GIT_REPO_URL = 'https://github.com/ahurein-amalitech/java-upskill-inter-week_4/tree/main/part_four_jenkins'
         BRANCH = 'lab_2'
-        DOCKER_IMAGE = 'ahurein/lab_2_i'
-        DOCKER_CREDENTIALS_ID = 'dockerhub-pwd'
-        CONTAINER_TAG = 'lab_2_c'
     }
 
     stages {
