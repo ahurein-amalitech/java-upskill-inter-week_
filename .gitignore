@@ -3,3 +3,5 @@
 **/application.yml
 **mv.db
 data
+out
+**/out
