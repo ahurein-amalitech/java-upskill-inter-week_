@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    tools {
+        maven "maven"
+    }
+
+    environment {
+        GIT_REPO_URL = 'https://github.com/ahurein-amalitech/jenkins-rest-example'
+        BRANCH = 'lab_2'
+        DOCKER_IMAGE = 'ahurein/lab_2_i'
+        DOCKER_CREDENTIALS_ID = 'dockerhub-pwd'
+        CONTAINER_TAG = 'lab_2_c'
+    }
+
+    stages {
+        stage("Checkout") {
+            steps {
+                checkout scmGit(branches: [[name: "*/${BRANCH}"]], extensions: [], userRemoteConfigs: [[url: "${GIT_REPO_URL}"]])
+            }
+        }
+
+       stage("Unit Tests") {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                success {
+                    junit '**/target/surefire-reports/*.xml'
+                    echo "Unit tests completed successfully"
+                }
+                failure {
+                    echo "Unit tests failed"
+                }
+            }
+        }
+
+        stage("Build") {
+            steps {
+                sh 'mvn clean install'
+            }
+            post {
+                success {
+                    echo "Build completed successfully"
+                }
+                failure {
+                    echo "Build failed"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
